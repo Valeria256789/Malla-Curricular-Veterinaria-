@@ -1,51 +1,124 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla MVZ UAGRM</title>
+  <title>Malla Inteligente - MVZ UAGRM</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
     h1 { text-align: center; color: #2c3e50; }
-    .sem { margin-bottom: 20px; }
-    .sem h2 { cursor: pointer; color: #2980b9; }
-    .detalles { display: none; padding-left: 15px; background: #ecf0f1; border-radius: 5px; }
-    .detalles li { margin: 5px 0; }
+    .materia {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #eee;
+    }
+    .materia label { cursor: pointer; }
+    .bloqueada { opacity: 0.5; background-color: #f2f2f2; }
+    .habilitada { background-color: #d1f7c4; font-weight: bold; }
+    .aprobada { text-decoration: line-through; background-color: #a5d6a7; }
+    .semestre { margin-bottom: 25px; }
+    h2 { color: #1f5e88; margin-top: 20px; }
   </style>
 </head>
 <body>
-  <h1>Malla MVZ UAGRM – Veterinaria y Zootecnia</h1>
+<h1>Malla Inteligente - Medicina Veterinaria y Zootecnia (UAGRM)</h1>
+<div id="malla"></div><script>
+const materias = [
+  { nombre: "Ecología General", codigo: "eco", semestre: 1 },
+  { nombre: "Histología y Embriología Veterinaria", codigo: "he", semestre: 1 },
+  { nombre: "Anatomía Veterinaria I", codigo: "ana1", semestre: 1 },
+  { nombre: "Metodología de la Investigación", codigo: "met", semestre: 1 },
+  { nombre: "Bioquímica Veterinaria I", codigo: "bioq1", semestre: 1 },
 
-  <!-- Repite este bloque para cada semestre -->
-  <div class="sem">
-    <h2 onclick="toggle('s1')">📘 Semestre 1</h2>
-    <ul id="s1" class="detalles">
-      <li>SAP100 Ecología General</li>
-      <li>VET100 Histología y Embriología Veterinaria</li>
-      <li>VET101 Anatomía Veterinaria I</li>
-      <li>VET102 Metodología de la Investigación</li>
-      <li>ZOT100 Bioquímica Veterinaria I</li>
-    </ul>
-  </div>
+  { nombre: "Histología II", codigo: "he2", semestre: 2, prereqs: ["he"] },
+  { nombre: "Anatomía II", codigo: "ana2", semestre: 2, prereqs: ["ana1"] },
+  { nombre: "Bioquímica II", codigo: "bioq2", semestre: 2, prereqs: ["bioq1"] },
+  { nombre: "Bioestadística", codigo: "bioest", semestre: 2 },
+  { nombre: "Etología y Bienestar", codigo: "etologia", semestre: 2 },
 
-  <div class="sem">
-    <h2 onclick="toggle('s2')">📙 Semestre 2</h2>
-    <ul id="s2" class="detalles">
-      <li>VET103 Histología Veterinaria II</li>
-      <li>VET104 Anatomía Veterinaria II</li>
-      <li>ZOT101 Bioquímica Veterinaria II</li>
-      <li>ZOT102 Bioestadística Veterinaria</li>
-      <li>ZOT103 Etología y Bienestar Animal</li>
-    </ul>
-  </div>
+  { nombre: "Bacteriología y Micología", codigo: "bact", semestre: 3, prereqs: ["bioq2"] },
+  { nombre: "Virología e Inmunología", codigo: "virologia", semestre: 3, prereqs: ["bioq2"] },
+  { nombre: "Parasitología I", codigo: "paras1", semestre: 3 },
+  { nombre: "Fisiología I", codigo: "fisio1", semestre: 3, prereqs: ["ana2"] },
+  { nombre: "Genética", codigo: "gen", semestre: 3 },
 
-  <!-- Semestres 3–10 continúan igual -->
-  <!-- ... -->
+  { nombre: "Parasitología II", codigo: "paras2", semestre: 4, prereqs: ["paras1"] },
+  { nombre: "Fisiología II", codigo: "fisio2", semestre: 4, prereqs: ["fisio1"] },
+  { nombre: "Patología General", codigo: "patog", semestre: 4 },
+  { nombre: "Propedéutica", codigo: "prope", semestre: 4 },
+  { nombre: "Nutrición Aplicada", codigo: "nutri", semestre: 4, prereqs: ["gen"] },
 
-  <script>
-    function toggle(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  // Puedes seguir agregando más materias con su semestre y prereqs aquí...
+];
+
+const estado = {};
+const malla = document.getElementById("malla");
+
+function crearMalla() {
+  for (let s = 1; s <= 10; s++) {
+    const semDiv = document.createElement("div");
+    semDiv.className = "semestre";
+    const h2 = document.createElement("h2");
+    h2.textContent = `📘 Semestre ${s}`;
+    semDiv.appendChild(h2);
+
+    materias.filter(m => m.semestre === s).forEach(m => {
+      const div = document.createElement("div");
+      div.className = "materia bloqueada";
+      div.id = `div-${m.codigo}`;
+
+      const check = document.createElement("input");
+      check.type = "checkbox";
+      check.id = m.codigo;
+      check.disabled = true;
+
+      check.addEventListener("change", () => {
+        estado[m.codigo] = check.checked;
+        if (check.checked) {
+          div.classList.add("aprobada");
+        } else {
+          div.classList.remove("aprobada");
+        }
+        actualizarMalla();
+      });
+
+      const label = document.createElement("label");
+      label.htmlFor = m.codigo;
+      label.textContent = " " + m.nombre;
+
+      div.appendChild(check);
+      div.appendChild(label);
+      semDiv.appendChild(div);
+    });
+
+    malla.appendChild(semDiv);
+  }
+  actualizarMalla();
+}
+
+function actualizarMalla() {
+  materias.forEach(m => {
+    const div = document.getElementById(`div-${m.codigo}`);
+    const checkbox = document.getElementById(m.codigo);
+    const requisitos = m.prereqs || [];
+    const aprobados = requisitos.every(r => estado[r]);
+    const yaAprobada = estado[m.codigo];
+
+    if (yaAprobada) {
+      checkbox.disabled = false;
+      checkbox.checked = true;
+      div.className = "materia aprobada";
+    } else if (requisitos.length === 0 || aprobados) {
+      checkbox.disabled = false;
+      div.className = "materia habilitada";
+    } else {
+      checkbox.disabled = true;
+      checkbox.checked = false;
+      div.className = "materia bloqueada";
     }
-  </script>
-</body>
+  });
+}
+
+crearMalla();
+</script></body>
 </html>
