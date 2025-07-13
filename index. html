@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla MVZ UAGRM</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+    h1 { text-align: center; color: #2c3e50; }
+    .sem { margin-bottom: 20px; }
+    .sem h2 { cursor: pointer; color: #2980b9; }
+    .detalles { display: none; padding-left: 15px; background: #ecf0f1; border-radius: 5px; }
+    .detalles li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>Malla MVZ UAGRM – Veterinaria y Zootecnia</h1>
+
+  <!-- Repite este bloque para cada semestre -->
+  <div class="sem">
+    <h2 onclick="toggle('s1')">📘 Semestre 1</h2>
+    <ul id="s1" class="detalles">
+      <li>SAP100 Ecología General</li>
+      <li>VET100 Histología y Embriología Veterinaria</li>
+      <li>VET101 Anatomía Veterinaria I</li>
+      <li>VET102 Metodología de la Investigación</li>
+      <li>ZOT100 Bioquímica Veterinaria I</li>
+    </ul>
+  </div>
+
+  <div class="sem">
+    <h2 onclick="toggle('s2')">📙 Semestre 2</h2>
+    <ul id="s2" class="detalles">
+      <li>VET103 Histología Veterinaria II</li>
+      <li>VET104 Anatomía Veterinaria II</li>
+      <li>ZOT101 Bioquímica Veterinaria II</li>
+      <li>ZOT102 Bioestadística Veterinaria</li>
+      <li>ZOT103 Etología y Bienestar Animal</li>
+    </ul>
+  </div>
+
+  <!-- Semestres 3–10 continúan igual -->
+  <!-- ... -->
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
