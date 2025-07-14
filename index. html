@@ -24,31 +24,73 @@
 <h1>Malla Inteligente - Medicina Veterinaria y Zootecnia (UAGRM)</h1>
 <div id="malla"></div><script>
 const materias = [
+  // SEMESTRE 1
   { nombre: "Ecología General", codigo: "eco", semestre: 1 },
   { nombre: "Histología y Embriología Veterinaria", codigo: "he", semestre: 1 },
   { nombre: "Anatomía Veterinaria I", codigo: "ana1", semestre: 1 },
   { nombre: "Metodología de la Investigación", codigo: "met", semestre: 1 },
   { nombre: "Bioquímica Veterinaria I", codigo: "bioq1", semestre: 1 },
 
+  // SEMESTRE 2
   { nombre: "Histología II", codigo: "he2", semestre: 2, prereqs: ["he"] },
   { nombre: "Anatomía II", codigo: "ana2", semestre: 2, prereqs: ["ana1"] },
   { nombre: "Bioquímica II", codigo: "bioq2", semestre: 2, prereqs: ["bioq1"] },
   { nombre: "Bioestadística", codigo: "bioest", semestre: 2 },
   { nombre: "Etología y Bienestar", codigo: "etologia", semestre: 2 },
 
+  // SEMESTRE 3
   { nombre: "Bacteriología y Micología", codigo: "bact", semestre: 3, prereqs: ["bioq2"] },
   { nombre: "Virología e Inmunología", codigo: "virologia", semestre: 3, prereqs: ["bioq2"] },
   { nombre: "Parasitología I", codigo: "paras1", semestre: 3 },
   { nombre: "Fisiología I", codigo: "fisio1", semestre: 3, prereqs: ["ana2"] },
   { nombre: "Genética", codigo: "gen", semestre: 3 },
 
+  // SEMESTRE 4
   { nombre: "Parasitología II", codigo: "paras2", semestre: 4, prereqs: ["paras1"] },
   { nombre: "Fisiología II", codigo: "fisio2", semestre: 4, prereqs: ["fisio1"] },
   { nombre: "Patología General", codigo: "patog", semestre: 4 },
   { nombre: "Propedéutica", codigo: "prope", semestre: 4 },
   { nombre: "Nutrición Aplicada", codigo: "nutri", semestre: 4, prereqs: ["gen"] },
 
-  // Puedes seguir agregando más materias con su semestre y prereqs aquí...
+  // SEMESTRE 5
+  { nombre: "Fisiopatología de la Reproducción", codigo: "fisior", semestre: 5, prereqs: ["fisio2"] },
+  { nombre: "Patología Sistémica", codigo: "patsist", semestre: 5, prereqs: ["patog"] },
+  { nombre: "Farmacología y Terapéutica", codigo: "farmaco", semestre: 5 },
+  { nombre: "Alimentos y Alimentación", codigo: "alimentos", semestre: 5, prereqs: ["nutri"] },
+  { nombre: "Manejo de Forrajes", codigo: "forraje", semestre: 5 },
+
+  // SEMESTRE 6
+  { nombre: "Enfermedades Infecciosas", codigo: "infecciosas", semestre: 6, prereqs: ["bact", "virologia"] },
+  { nombre: "Imagenología", codigo: "imagen", semestre: 6 },
+  { nombre: "Toxicología", codigo: "toxico", semestre: 6 },
+  { nombre: "Cirugía Veterinaria", codigo: "cirugia", semestre: 6, prereqs: ["prope"] },
+  { nombre: "Economía Agropecuaria", codigo: "economia", semestre: 6 },
+
+  // SEMESTRE 7
+  { nombre: "Tecnología e Inspección de Alimentos", codigo: "tecali", semestre: 7, prereqs: ["alimentos"] },
+  { nombre: "Epidemiología", codigo: "epidemio", semestre: 7 },
+  { nombre: "Patología Clínica", codigo: "patoclin", semestre: 7, prereqs: ["patsist"] },
+  { nombre: "Producción de Ovinos y Camélidos", codigo: "ovinos", semestre: 7 },
+  { nombre: "Acuicultura", codigo: "acuicultura", semestre: 7 },
+
+  // SEMESTRE 8
+  { nombre: "Producción de Cerdos", codigo: "cerdos", semestre: 8 },
+  { nombre: "Producción de Bovinos de Carne", codigo: "bovcarne", semestre: 8 },
+  { nombre: "Producción de Bovinos de Leche", codigo: "bovleche", semestre: 8 },
+  { nombre: "Producción de Aves", codigo: "aves", semestre: 8 },
+  { nombre: "Producción de Equinos", codigo: "equinos", semestre: 8 },
+
+  // SEMESTRE 9
+  { nombre: "Salud Pública Veterinaria", codigo: "saludpub", semestre: 9, prereqs: ["epidemio"] },
+  { nombre: "Deontología y Legislación", codigo: "deonto", semestre: 9 },
+  { nombre: "Clínica para Todas las Especies", codigo: "clinica", semestre: 9, prereqs: ["cirugia", "patoclin"] },
+  { nombre: "Administración Agropecuaria", codigo: "admin", semestre: 9 },
+  { nombre: "Sociología Rural", codigo: "sociologia", semestre: 9 },
+
+  // SEMESTRE 10
+  { nombre: "Prácticas en Salud Pública", codigo: "ppsps", semestre: 10, prereqs: ["saludpub"] },
+  { nombre: "Prácticas en Clínica y Cirugía", codigo: "ppcc", semestre: 10, prereqs: ["clinica"] },
+  { nombre: "Prácticas en Producción y Administración", codigo: "ppprod", semestre: 10, prereqs: ["admin"] }
 ];
 
 const estado = {};
